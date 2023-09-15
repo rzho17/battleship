@@ -7,11 +7,11 @@ class Gameboard {
   createBoard() {
     const board = [];
     for (let i = 0; i < 10; i++) {
-      const row = []; // Create a new row for each iteration
+      const row = [];
       for (let j = 0; j < 10; j++) {
-        row.push("x");
+        row.push("[]");
       }
-      board.push(row); // Add the row to the board
+      board.push(row);
     }
     return board;
   }
@@ -36,7 +36,6 @@ class Gameboard {
       }
     }
 
-    // console.log("heyhey");
     return result;
   }
 
@@ -51,18 +50,9 @@ class Gameboard {
     // length = 10
     // if 10 - ship <= col = valid
 
-    // if (this.board[row][col] !== "x") {
-    // this.checkShip(ship, coord);
-    // }
+    const isValidPosition = this.checkShip(ship, coord, position);
 
-    // if (this.checkShip(ship, coord)) {
-    //   // return this.board;
-    // }
-
-    const result = this.checkShip(ship, coord, position);
-    console.log(result);
-
-    if (result === false) {
+    if (isValidPosition === false) {
       if (position === "x" && validPositionX) {
         for (let i = 0; i < ship.length; i++) {
           this.board[row][col + i] = ship;
@@ -75,9 +65,34 @@ class Gameboard {
         }
       }
     }
+  }
 
-    // console.log(this.board);
-    // return this.board;
+  receiveAttack(coord) {
+    const row = coord[0];
+    const col = coord[1];
+    let currentShip = this.board[row][col];
+    // let result = false;
+
+    // console.low(row);
+
+    if (currentShip instanceof Ship) {
+      currentShip.isHit();
+
+      if (currentShip.hits === currentShip.length) {
+        currentShip.isSunk();
+      }
+
+      this.board[row][col] = "x";
+
+      console.log(this.board);
+    }
+
+    if (currentShip === "x") {
+      return "invalid move";
+    }
+
+    // console.log(board);
+    // return result;
   }
 }
 
