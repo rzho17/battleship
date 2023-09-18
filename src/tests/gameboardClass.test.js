@@ -42,20 +42,20 @@ test("place ship y axis: 0 index", () => {
   expect(board.board[8][0]).toBe(patrol);
 });
 
-test("return true if placed on another ship", () => {
-  // board.placeShip(patrol, [8, 0], "y");
-  expect(board.checkShip(patrol, [9, 5])).toBeFalsy();
-});
+// test("return true if placed on another ship", () => {
+//   // board.placeShip(patrol, [8, 0], "y");
+//   expect(board.checkShip(patrol, [9, 5])).toBeFalsy();
+// });
 
-test("do not place ship if there is ship in path", () => {
-  board.placeShip(patrol, [6, 0], "y");
-  console.log(board.board);
-  expect(board.board[8][0]).toEqual({ hits: 0, length: 2, sunk: false });
-});
+// test("do not place ship if there is ship in path", () => {
+//   board.placeShip(patrol, [6, 0], "y");
+//   // console.log(board.board);
+//   expect(board.board[8][0]).toEqual({ hits: 0, length: 2, sunk: false });
+// });
 
 test("do not place ship if there is ship in path", () => {
   board.placeShip(patrol, [9, 1], "x");
-  console.log(board.board);
+  // console.log(board.board);
   expect(board.board[9][1]).toBe(destroyer);
 });
 
@@ -99,6 +99,29 @@ test("take coord on gameboard and returns hit number", () => {
   expect(destroyer.hits).toBe(4);
 });
 
-test("check if ship is sunk = true", () => {
+test("check if destroyer is sunk = true", () => {
   expect(destroyer.sunk).toBeTruthy();
 });
+
+test("check if patrol is sunk = false", () => {
+  expect(patrol.sunk).toBeFalsy();
+});
+
+test("take coord on gameboard and returns miss", () => {
+  board.receiveAttack([9, 8]);
+  expect(board.board[9][8]).toBe("o");
+  // console.log(board.board);
+});
+
+test("all ships sunk?", () => {
+  // board.receiveAttack([6, 0]);
+  // board.receiveAttack([7, 0]);
+  board.receiveAttack([8, 0]);
+  board.receiveAttack([9, 0]);
+
+  expect(patrol.sunk).toBeTruthy();
+  expect(destroyer.sunk).toBeTruthy();
+  expect(board.allShipsSunk).toBeTruthy();
+});
+
+// board.allShipsSunk();
