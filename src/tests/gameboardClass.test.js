@@ -113,7 +113,7 @@ test("take coord on gameboard and returns miss", () => {
   // console.log(board.board);
 });
 
-test("all ships sunk?", () => {
+test("all ships sunk? = gameover", () => {
   // board.receiveAttack([6, 0]);
   // board.receiveAttack([7, 0]);
   board.receiveAttack([8, 0]);

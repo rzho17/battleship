@@ -1,15 +1,17 @@
-const Ship = require("./shipClass");
+// const Ship = require("./shipClass");
+import Ship from "./shipClass.js";
 
 class Gameboard {
   constructor() {
     this.board = this.createBoard();
   }
+
   createBoard() {
     const board = [];
     for (let i = 0; i < 10; i++) {
       const row = [];
       for (let j = 0; j < 10; j++) {
-        row.push("[]");
+        row.push(null);
       }
       board.push(row);
     }
@@ -19,16 +21,19 @@ class Gameboard {
   checkShip(ship, coord, position) {
     const row = coord[0];
     const col = coord[1];
+    const validPositionX = 10 - ship.length >= col;
+    const validPositionY = 10 - ship.length >= row;
+
     let result = false;
 
-    if (position === "x") {
+    if (position === "x" && validPositionX) {
       for (let i = 0; i < ship.length; i++) {
         if (this.board[row][col + i] instanceof Ship) {
           result = true;
         }
       }
     }
-    if (position === "y") {
+    if (position === "y" && validPositionY) {
       for (let i = 0; i < ship.length; i++) {
         if (this.board[row + i][col] instanceof Ship) {
           result = true;
@@ -87,12 +92,21 @@ class Gameboard {
       // console.log(this.board);
     }
 
-    if (currentShip === "[]") {
+    if (currentShip === null) {
       this.board[row][col] = "o";
     }
 
     if (currentShip === "x") {
       return "invalid move";
+    }
+  }
+
+  findValidPosition() {
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        if (this.board[i][j] === "o" || this.board[i][j] === "x") {
+        }
+      }
     }
   }
 
@@ -108,4 +122,5 @@ class Gameboard {
   }
 }
 
-module.exports = Gameboard;
+export default Gameboard;
+// module.exports = Gameboard;

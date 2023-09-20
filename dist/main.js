@@ -1,1 +1,1 @@
-console.log("ho");
+(()=>{"use strict";const e=e=>{for(let t=0;t<10;t++)for(let r=0;r<10;r++){const o=document.createElement("div");e.appendChild(o),o.className="gridSquare",o.dataset.num=t+r}},t=document.querySelector(".playerBoard"),r=document.querySelector(".computerBoard");e(t),e(r)})();
