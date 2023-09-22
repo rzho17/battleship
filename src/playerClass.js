@@ -4,13 +4,22 @@ import Gameboard from "./gameboardClass.js";
 import Ship from "./shipClass.js";
 
 class Player {
-  constructor(gameBoard) {
+  constructor(gameBoard, shipHolder) {
     this.gameBoard = new Gameboard();
+
     this.carrier = new Ship(5, 0, false);
     this.battleship = new Ship(4, 0, false);
     this.destroyer = new Ship(3, 0, false);
     this.submarine = new Ship(3, 0, false);
     this.patrolBoat = new Ship(2, 0, false);
+
+    this.shipHolder = [
+      this.carrier,
+      this.battleship,
+      this.destroyer,
+      this.submarine,
+      this.patrolBoat,
+    ];
   }
 
   placeShip(ship, coord, position) {
