@@ -18,21 +18,92 @@ const setAxis = (position) => {
   return position;
 };
 
+const setShipGridHelper = (user, coord, position) => {
+  user.placeShip(user.shipHolder.shift(), coord, position);
+
+  //   console.log(currentShip);
+  //   console.log(user.gameBoard.board);
+
+  updateGrid(user.gameBoard.board, "initialBoard");
+};
+
+const setShipHover = (user) => {
+  const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
+  //   const temp = [...user.shipHolder];
+
+  //   console.log(currentShip);
+
+  //   const specificGrid = document.querySelector(
+  //     `.initialBoard [data-grid-position="${x}${y}"]`
+  //   );
+
+  initialGrid.forEach((grid) => {
+    grid.addEventListener("mouseover", () => {
+      const currentShip = user.shipHolder[0];
+      let xPosition = grid.dataset.gridPosition[0];
+      let yPosition = grid.dataset.gridPosition[1];
+      //   let specificGrid = document.querySelector(
+      //     `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
+      //   );
+
+      //   console.log(specificGrid);
+      //   console.log(currentShip);
+
+      for (let i = 0; i < currentShip.length; i++) {
+        // const element = array[i];
+        yPosition = parseInt(yPosition);
+
+        let specificGrid = document.querySelector(
+          `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
+        );
+        yPosition += 1;
+
+        specificGrid.style.backgroundColor = "red";
+      }
+
+      //   console.log(xPosition);
+    });
+
+    grid.addEventListener("mouseout", () => {
+      const currentShip = user.shipHolder[0];
+      let xPosition = grid.dataset.gridPosition[0];
+      let yPosition = grid.dataset.gridPosition[1];
+
+      for (let i = 0; i < currentShip.length; i++) {
+        // const element = array[i];
+        yPosition = parseInt(yPosition);
+
+        let specificGrid = document.querySelector(
+          `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
+        );
+        yPosition += 1;
+
+        specificGrid.style.backgroundColor = "white";
+      }
+    });
+  });
+};
+
 const setShipGrid = (user) => {
   const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
   const rotateBtn = document.querySelector(".rotateBtn");
   let position = "x";
+
   rotateBtn.addEventListener("click", () => {
     position = setAxis(position);
     console.log(position);
   });
   //   console.log(position);
 
+  setShipHover(user);
   initialGrid.forEach((grid) => {
+    // grid.addEventListener("mouseover", () => {
+    //   grid.style.backgroundColor = "red";
+    // });
+
     grid.addEventListener("click", (e) => {
       const coord = getCoord(e.target.dataset.gridPosition);
       const currentShip = user.shipHolder[0];
-      //   const rotationAxis = setAxis(position);
       const xValid = 10 - currentShip.length >= coord[1];
       const yValid = 10 - currentShip.length >= coord[0];
       const shipPositionValid =
@@ -40,25 +111,22 @@ const setShipGrid = (user) => {
 
       console.log(coord);
 
-      if (position === "x") {
-        if (xValid && shipPositionValid) {
-          user.placeShip(user.shipHolder.shift(), coord, position);
-
-          console.log(currentShip);
-          console.log(user.gameBoard.board);
-
-          updateGrid(user.gameBoard.board, "initialBoard");
-        }
+      //need to set a tracker for when currentShip length = 0
+      //once that condition is met, the welcome screen will close and the game will begin
+      if (position === "x" && xValid && shipPositionValid) {
+        //   user.placeShip(user.shipHolder.shift(), coord, position);
+        //   console.log(currentShip);
+        //   console.log(user.gameBoard.board);
+        //   updateGrid(user.gameBoard.board, "initialBoard");
+        setShipGridHelper(user, coord, position);
       }
-      if (position === "y") {
-        if (yValid && shipPositionValid) {
-          user.placeShip(user.shipHolder.shift(), coord, position);
 
-          console.log(currentShip);
-          console.log(user.gameBoard.board);
-
-          updateGrid(user.gameBoard.board, "initialBoard");
-        }
+      if (position === "y" && yValid && shipPositionValid) {
+        setShipGridHelper(user, coord, position);
+        //   user.placeShip(user.shipHolder.shift(), coord, position);
+        //   console.log(currentShip);
+        //   console.log(user.gameBoard.board);
+        //   updateGrid(user.gameBoard.board, "initialBoard");
       }
     });
   });
