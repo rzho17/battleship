@@ -12,7 +12,8 @@ const makeGrid = (board) => {
     counter++;
   }
 };
-const setAxis = (position, user) => {
+
+const setAxis = (position) => {
   position = position === "x" ? "y" : "x";
   //   console.log(position);
   // setShipHover(user, position);
@@ -26,10 +27,27 @@ const setShipGridHelper = (user, coord, position) => {
   updateGrid(user.gameBoard.board, "initialBoard");
 };
 
-const setShipHoverHelper = (ship, x, y, color) => {
+// const checkShipGrid = (x, y) => {
+//   let xPosition = x;
+//   let yPosition = y;
+
+//   for (let i = 0; i < currentShip.length; i++) {
+//     yPosition = parseInt(yPosition);
+
+//     let specificGrid = document.querySelector(
+//       `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
+//     );
+//     yPosition += 1;
+
+//     specificGrid.style.backgroundColor = color;
+//   }
+// };
+
+const setShipHoverHelperX = (ship, grid, color) => {
   const currentShip = ship.shipHolder[0];
-  let xPosition = x;
-  let yPosition = y;
+  let xPosition = grid.dataset.gridPosition[0];
+
+  let yPosition = grid.dataset.gridPosition[1];
 
   for (let i = 0; i < currentShip.length; i++) {
     yPosition = parseInt(yPosition);
@@ -37,16 +55,36 @@ const setShipHoverHelper = (ship, x, y, color) => {
     let specificGrid = document.querySelector(
       `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
     );
-    yPosition += 1;
 
-    specificGrid.style.backgroundColor = color;
+    if (specificGrid.classList.contains("ship")) {
+      specificGrid.style.backgroundColor = "red";
+
+      // grid.addEventListener("mouseout", () => {
+      //   // for (let i = 0; i < currentShip.length; i++) {
+      //   specificGrid.style.backgroundColor = "orange";
+      //   // }
+      // });
+    } else {
+      specificGrid.style.backgroundColor = color;
+    }
+
+    if (!(10 - currentShip.length < grid.dataset.gridPosition[1])) {
+      yPosition += 1;
+    }
+    grid.addEventListener("mouseout", () => {
+      const allGrids = document.querySelectorAll(" .ship");
+      allGrids.forEach((grid) => {
+        grid.style.backgroundColor = "orange";
+      });
+    });
   }
 };
 
-const setShipHoverHelperY = (ship, x, y, color) => {
+const setShipHoverHelperY = (ship, grid, color) => {
   const currentShip = ship.shipHolder[0];
-  let xPosition = x;
-  let yPosition = y;
+  let xPosition = grid.dataset.gridPosition[0];
+
+  let yPosition = grid.dataset.gridPosition[1];
 
   for (let i = 0; i < currentShip.length; i++) {
     xPosition = parseInt(xPosition);
@@ -54,191 +92,99 @@ const setShipHoverHelperY = (ship, x, y, color) => {
     let specificGrid = document.querySelector(
       `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
     );
-    xPosition += 1;
 
-    specificGrid.style.backgroundColor = color;
+    if (specificGrid.classList.contains("ship")) {
+      specificGrid.style.backgroundColor = "red";
+
+      // grid.addEventListener("mouseout", () => {
+      //   // for (let i = 0; i < currentShip.length; i++) {
+      //   specificGrid.style.backgroundColor = "orange";
+      //   // }
+      // });
+    } else {
+      specificGrid.style.backgroundColor = color;
+    }
+
+    if (!(10 - currentShip.length < grid.dataset.gridPosition[0])) {
+      xPosition += 1;
+    }
+
+    grid.addEventListener("mouseout", () => {
+      const allGrids = document.querySelectorAll(" .ship");
+      allGrids.forEach((grid) => {
+        grid.style.backgroundColor = "orange";
+      });
+    });
+
+    // if (specificGrid.classList.contains("ship")) {
+    //   specificGrid.style.backgroundColor = "red";
+    //   grid.addEventListener("mouseout", () => {
+    //     specificGrid.style.backgroundColor = "orange";
+    //   });
+    // } else {
+    //   specificGrid.style.backgroundColor = color;
+    // }
+    // xPosition += 1;
+
+    // specificGrid.style.backgroundColor = color;
   }
 };
 
-const setShipHover = (user, position, grid) => {
-  const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
-  const rotateBtn = document.querySelector(".rotateBtn");
-  let tempValue = "";
-  // console.log(position);
-
+const setShipHoverX = (user, position, grid) => {
   //try changing this to be mouse over the initial grid, we might not get the error for things out of bound
 
-  let mouseOverX = () => {};
-  let mouseOutX = () => {};
-  let mouseOverY = () => {};
-  let mouseOutY = () => {};
-
-  // setShipHoverHelper(user, 1, 4, "blue");
-
-  // console.log(grid.dataset.gridPosition[0]);
-  // console.log(grid.dataset.gridPosition[1]);
-  // if (position === "x") {
-  //   console.log("adsf");
-  // }
-
-  const test = (position) => {
-    console.log(position);
+  const mouseOverX = () => {
+    setShipHoverHelperX(user, grid, "blue");
   };
 
-  test(position);
-
-  mouseOverX = () => {
-    setShipHoverHelper(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "blue"
-    );
-  };
-  mouseOutX = () => {
-    setShipHoverHelper(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "white"
-    );
-  };
-  mouseOverY = () => {
-    setShipHoverHelperY(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "green"
-    );
-  };
-  mouseOutY = () => {
-    setShipHoverHelperY(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "white"
-    );
+  const mouseOverY = () => {
+    setShipHoverHelperY(user, grid, "blue");
   };
 
-  // mouseOverX();
+  if (position === "x") mouseOverX();
 
-  if (position === "x") {
-    mouseOverX();
-    // mouseOutX();
-    // grid.removeEventListener("mouseover", mouseOverY);
-    // grid.removeEventListener("mouseout", mouseOutY);
-    // console.log("yo");
-    // rotateBtn.addEventListener("click", () => {
-    // });
-    // rotateBtn.removeEventListener("click", mouseOutY);
-    // mouseOverX();
-    // grid.addEventListener("mouseover", mouseOverX);
-    // grid.addEventListener("mouseout", mouseOutX);
-  }
-
-  if (position === "y") {
-    mouseOverY();
-    // mouseOutY();
-    // grid.removeEventListener("mouseover", mouseOverX);
-    // grid.removeEventListener("mouseout", mouseOutX);
-    // // rotateBtn.addEventListener("onclick", () => {
-    // // });
-    // // rotateBtn.removeEventListener("click", mouseOutY);
-    // grid.addEventListener("mouseover", mouseOverY);
-    // grid.addEventListener("mouseout", mouseOutY);
-  }
-
-  // if (position === "y") {
-  //   initialGrid.forEach((grid) => {
-  //     grid.removeEventListener("mouseover", mouseOverX);
-
-  //     grid.removeEventListener("mouseout", mouseOutX);
-
-  //     console.log("asdf");
-
-  //     mouseOverY = () => {
-  //       setShipHoverHelperY(
-  //         user,
-  //         grid.dataset.gridPosition[0],
-  //         grid.dataset.gridPosition[1],
-  //         "green"
-  //       );
-  //     };
-  //     mouseOutY = () => {
-  //       setShipHoverHelperY(
-  //         user,
-  //         grid.dataset.gridPosition[0],
-  //         grid.dataset.gridPosition[1],
-  //         "white"
-  //       );
-  //     };
-
-  //     grid.addEventListener("mouseover", mouseOverY);
-  //     grid.addEventListener("mouseout", mouseOutY);
-  //   });
-  // }
+  if (position === "y") mouseOverY();
 };
 
-const setShipHoverTest = (user, position, grid) => {
-  let mouseOutX = () => {
-    setShipHoverHelper(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "white"
-    );
+const setShipHoverY = (user, position, grid) => {
+  const mouseOutX = () => {
+    setShipHoverHelperX(user, grid, "white");
   };
-  let mouseOutY = () => {
-    setShipHoverHelperY(
-      user,
-      grid.dataset.gridPosition[0],
-      grid.dataset.gridPosition[1],
-      "white"
-    );
+  const mouseOutY = () => {
+    setShipHoverHelperY(user, grid, "white");
   };
 
-  if (position === "x") {
-    mouseOutX();
-  }
+  if (position === "x") mouseOutX();
 
-  if (position === "y") {
-    mouseOutY();
-  }
+  if (position === "y") mouseOutY();
 };
-
-// const positions = (() => {
-//   let position = "x";
-
-//   return { position };
-// })();
 
 const setShipGrid = (user) => {
   const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
   const rotateBtn = document.querySelector(".rotateBtn");
-  //   let position = "x";
   let position = "x";
-  let executed = false;
 
   rotateBtn.addEventListener("click", () => {
     position = setAxis(position, user);
-    // console.log(position);
   });
 
-  initialGrid.forEach((grid) => {
-    grid.addEventListener("mouseover", () => {
-      setShipHover(user, position, grid);
-    });
-    grid.addEventListener("mouseout", () => {
-      setShipHoverTest(user, position, grid);
-    });
-  });
-  //   console.log(position);
+  // initialGrid.forEach((grid) => {
+  //   grid.addEventListener("mouseover", () => {
+  //     setShipHoverX(user, position, grid);
+  //   });
+  //   grid.addEventListener("mouseout", () => {
+  //     setShipHoverY(user, position, grid);
+  //   });
+  // });
 
   //goal for tomorrow set the position to switch each time
   initialGrid.forEach((grid) => {
-    // grid.addEventListener("mouseover", () => {
-    //   grid.style.backgroundColor = "red";
-    // });
+    grid.addEventListener("mouseover", () => {
+      setShipHoverX(user, position, grid);
+    });
+    grid.addEventListener("mouseout", () => {
+      setShipHoverY(user, position, grid);
+    });
 
     grid.addEventListener("click", (e) => {
       const coord = getCoord(e.target.dataset.gridPosition);
@@ -247,11 +193,6 @@ const setShipGrid = (user) => {
       const yValid = 10 - currentShip.length >= coord[0];
       const shipPositionValid =
         user.gameBoard.checkShip(currentShip, coord, position) === false;
-      // setShipHover(user, position, grid);
-
-      // console.log(coord);
-      // console.log(position);
-      // setShipHover(user, position);
 
       //need to set a tracker for when currentShip length = 0
       //once that condition is met, the welcome screen will close and the game will begin
@@ -334,6 +275,7 @@ const updateGridHelper = (x, y, colour, user) => {
     `.${user} [data-grid-position="${x}${y}"]`
   );
 
+  specificGrid.classList.add("ship");
   //   console.log(specificGrid);
 
   specificGrid.style.backgroundColor = colour;
