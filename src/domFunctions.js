@@ -58,12 +58,6 @@ const setShipHoverHelperX = (ship, grid, color) => {
 
     if (specificGrid.classList.contains("ship")) {
       specificGrid.style.backgroundColor = "red";
-
-      // grid.addEventListener("mouseout", () => {
-      //   // for (let i = 0; i < currentShip.length; i++) {
-      //   specificGrid.style.backgroundColor = "orange";
-      //   // }
-      // });
     } else {
       specificGrid.style.backgroundColor = color;
     }
@@ -95,12 +89,6 @@ const setShipHoverHelperY = (ship, grid, color) => {
 
     if (specificGrid.classList.contains("ship")) {
       specificGrid.style.backgroundColor = "red";
-
-      // grid.addEventListener("mouseout", () => {
-      //   // for (let i = 0; i < currentShip.length; i++) {
-      //   specificGrid.style.backgroundColor = "orange";
-      //   // }
-      // });
     } else {
       specificGrid.style.backgroundColor = color;
     }
@@ -115,18 +103,6 @@ const setShipHoverHelperY = (ship, grid, color) => {
         grid.style.backgroundColor = "orange";
       });
     });
-
-    // if (specificGrid.classList.contains("ship")) {
-    //   specificGrid.style.backgroundColor = "red";
-    //   grid.addEventListener("mouseout", () => {
-    //     specificGrid.style.backgroundColor = "orange";
-    //   });
-    // } else {
-    //   specificGrid.style.backgroundColor = color;
-    // }
-    // xPosition += 1;
-
-    // specificGrid.style.backgroundColor = color;
   }
 };
 
@@ -178,6 +154,11 @@ const setShipGrid = (user) => {
   // });
 
   //goal for tomorrow set the position to switch each time
+  // if (user.shipHolder.length === 0) {
+  //   console.log("hi");
+  //   const loadScreen = document.querySelector(".loadContainer");
+  //   loadScreen.style.display = "none";
+  // }
   initialGrid.forEach((grid) => {
     grid.addEventListener("mouseover", () => {
       setShipHoverX(user, position, grid);
@@ -196,12 +177,22 @@ const setShipGrid = (user) => {
 
       //need to set a tracker for when currentShip length = 0
       //once that condition is met, the welcome screen will close and the game will begin
-      if (position === "x" && xValid && shipPositionValid) {
-        setShipGridHelper(user, coord, position);
-      }
+      // if (user.shipHolder.length === 0) {
+      //   console.log("hi");
+      //   loadScreen.style.display = "none";
+      // }
 
-      if (position === "y" && yValid && shipPositionValid) {
-        setShipGridHelper(user, coord, position);
+      if (currentShip.length === 2) {
+        const loadScreen = document.querySelector(".loadContainer");
+        loadScreen.style.display = "none";
+      } else {
+        if (position === "x" && xValid && shipPositionValid) {
+          setShipGridHelper(user, coord, position);
+        }
+
+        if (position === "y" && yValid && shipPositionValid) {
+          setShipGridHelper(user, coord, position);
+        }
       }
     });
   });
