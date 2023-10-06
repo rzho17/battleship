@@ -25,6 +25,10 @@ const setShipGridHelper = (user, coord, position) => {
   user.placeShip(user.shipHolder.shift(), coord, position);
 
   updateGrid(user.gameBoard.board, "initialBoard");
+
+  if (user.shipHolder.length < 1) {
+    closeWelcome(user);
+  }
 };
 
 // const checkShipGrid = (x, y) => {
@@ -135,9 +139,16 @@ const setShipHoverY = (user, position, grid) => {
   if (position === "y") mouseOutY();
 };
 
+const closeWelcome = (user) => {
+  const loadScreen = document.querySelector(".loadContainer");
+  loadScreen.style.display = "none";
+  updateGrid(user.gameBoard.board, "playerBoard");
+};
+
 const setShipGrid = (user) => {
   const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
   const rotateBtn = document.querySelector(".rotateBtn");
+
   let position = "x";
 
   rotateBtn.addEventListener("click", () => {
@@ -159,33 +170,42 @@ const setShipGrid = (user) => {
   //   const loadScreen = document.querySelector(".loadContainer");
   //   loadScreen.style.display = "none";
   // }
+
   initialGrid.forEach((grid) => {
-    grid.addEventListener("mouseover", () => {
-      setShipHoverX(user, position, grid);
-    });
-    grid.addEventListener("mouseout", () => {
-      setShipHoverY(user, position, grid);
-    });
+    // if (user.shipHolder.length === 0) {
+    //   grid.addEventListener("mousemove", () => {
+    //     console.log(user.shipHolder.length);
+    //     const loadScreen = document.querySelector(".loadContainer");
+    //     loadScreen.style.display = "none";
+    //     updateGrid(user.gameBoard.board, "playerBoard");
+    //   });
+    // }
+  });
+
+  initialGrid.forEach((grid) => {
+    // if (user.shipHolder.length === 0) {
+    //   closeWelcome();
+    // }
 
     grid.addEventListener("click", (e) => {
-      const coord = getCoord(e.target.dataset.gridPosition);
-      const currentShip = user.shipHolder[0];
-      const xValid = 10 - currentShip.length >= coord[1];
-      const yValid = 10 - currentShip.length >= coord[0];
-      const shipPositionValid =
-        user.gameBoard.checkShip(currentShip, coord, position) === false;
-
-      //need to set a tracker for when currentShip length = 0
-      //once that condition is met, the welcome screen will close and the game will begin
       // if (user.shipHolder.length === 0) {
-      //   console.log("hi");
+      //   const loadScreen = document.querySelector(".loadContainer");
       //   loadScreen.style.display = "none";
+      //   updateGrid(user.gameBoard.board, "playerBoard");
       // }
+      if (user.shipHolder.length > 0) {
+        const coord = getCoord(e.target.dataset.gridPosition);
+        const currentShip = user.shipHolder[0];
+        const xValid = 10 - currentShip.length >= coord[1];
+        const yValid = 10 - currentShip.length >= coord[0];
+        const shipPositionValid =
+          user.gameBoard.checkShip(currentShip, coord, position) === false;
 
-      if (currentShip.length === 2) {
-        const loadScreen = document.querySelector(".loadContainer");
-        loadScreen.style.display = "none";
-      } else {
+        // console.log(user.shipHolder.length);
+
+        //need to set a tracker for when currentShip length = 0
+        //once that condition is met, the welcome screen will close and the game will begin
+
         if (position === "x" && xValid && shipPositionValid) {
           setShipGridHelper(user, coord, position);
         }
@@ -195,7 +215,19 @@ const setShipGrid = (user) => {
         }
       }
     });
+
+    grid.addEventListener("mouseover", () => {
+      if (user.shipHolder.length > 0) {
+        setShipHoverX(user, position, grid);
+      }
+    });
+    grid.addEventListener("mouseout", () => {
+      if (user.shipHolder.length > 0) {
+        setShipHoverY(user, position, grid);
+      }
+    });
   });
+
   //   console.log(initialGrid);
 };
 
