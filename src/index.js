@@ -4,18 +4,21 @@ import makeGrid, {
   welcomeScreen,
 } from "./domFunctions";
 
-import Player from "./playerClass";
+import player from "./gameControl";
+import gameFlow from "./gameControl";
+// import Player from "./playerClass";
 
-const playerBoard = document.querySelector(".playerBoard");
-const computerBoard = document.querySelector(".computerBoard");
+// const playerBoard = document.querySelector(".playerBoard");
+// const computerBoard = document.querySelector(".computerBoard");
 
-makeGrid(playerBoard);
-makeGrid(computerBoard);
+// makeGrid(playerBoard);
+// makeGrid(computerBoard);
 
-const player = new Player();
-const computer = new Player();
+// console.log(player);
 
-welcomeScreen(player);
+// const player = new Player();
+
+// welcomeScreen(gameFlow.player);
 
 // player.placeShip(player.carrier, [0, 0], "x");
 // player.placeShip(player.destroyer, [2, 5], "x");

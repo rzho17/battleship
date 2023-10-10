@@ -155,44 +155,10 @@ const setShipGrid = (user) => {
     position = setAxis(position, user);
   });
 
-  // initialGrid.forEach((grid) => {
-  //   grid.addEventListener("mouseover", () => {
-  //     setShipHoverX(user, position, grid);
-  //   });
-  //   grid.addEventListener("mouseout", () => {
-  //     setShipHoverY(user, position, grid);
-  //   });
-  // });
-
   //goal for tomorrow set the position to switch each time
-  // if (user.shipHolder.length === 0) {
-  //   console.log("hi");
-  //   const loadScreen = document.querySelector(".loadContainer");
-  //   loadScreen.style.display = "none";
-  // }
 
   initialGrid.forEach((grid) => {
-    // if (user.shipHolder.length === 0) {
-    //   grid.addEventListener("mousemove", () => {
-    //     console.log(user.shipHolder.length);
-    //     const loadScreen = document.querySelector(".loadContainer");
-    //     loadScreen.style.display = "none";
-    //     updateGrid(user.gameBoard.board, "playerBoard");
-    //   });
-    // }
-  });
-
-  initialGrid.forEach((grid) => {
-    // if (user.shipHolder.length === 0) {
-    //   closeWelcome();
-    // }
-
     grid.addEventListener("click", (e) => {
-      // if (user.shipHolder.length === 0) {
-      //   const loadScreen = document.querySelector(".loadContainer");
-      //   loadScreen.style.display = "none";
-      //   updateGrid(user.gameBoard.board, "playerBoard");
-      // }
       if (user.shipHolder.length > 0) {
         const coord = getCoord(e.target.dataset.gridPosition);
         const currentShip = user.shipHolder[0];
@@ -264,7 +230,7 @@ export const welcomeScreen = (player) => {
   setShipGrid(player);
 };
 
-const getCoord = (str) => {
+export const getCoord = (str) => {
   const xValue = parseInt(str[0]);
   const yValue = parseInt(str[1]);
   //   console.log(str[0], str[1]);
@@ -274,6 +240,8 @@ const getCoord = (str) => {
 
 export const getGridPosition = (arr, user) => {
   const gridSquare = document.querySelectorAll(`.${user} .gridSquare`);
+  // console.log(user);
+  // console.log("ia am working!");
 
   gridSquare.forEach((item) => {
     item.addEventListener("click", (e) => {
@@ -282,13 +250,15 @@ export const getGridPosition = (arr, user) => {
       const yValue = coord[1];
 
       if (arr[xValue][yValue] instanceof Ship) {
-        e.target.style.backgroundColor = "red";
+        e.target.style.backgroundColor = "orange";
       }
       if (arr[xValue][yValue] === null) {
         e.target.style.backgroundColor = "grey";
       }
 
       updateGrid(arr, user);
+      //maybe will use this to return coord so player can attack
+      // return console.log(coord);
     });
   });
 };
@@ -311,16 +281,27 @@ export const updateGrid = (arr, user) => {
   //make the item in the array match with each digit in the board
   //step 2: update the board
 
+  // console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] instanceof Ship) {
-        updateGridHelper([i], [j], "orange", user);
-      }
-      if (arr[i][j] === "x") {
-        // e.target.style.backgroundColor = "red";
-        updateGridHelper([i], [j], "red", user);
-      } else if (arr[i][j] === "o") {
-        updateGridHelper([i], [j], "grey", user);
+      if (user === "playerBoard" || user === "initialBoard") {
+        if (arr[i][j] instanceof Ship) {
+          // console.log(arr[i][j]);
+          updateGridHelper([i], [j], "orange", user);
+        }
+        if (arr[i][j] === "x") {
+          // e.target.style.backgroundColor = "red";
+          updateGridHelper([i], [j], "red", user);
+        } else if (arr[i][j] === "o") {
+          updateGridHelper([i], [j], "grey", user);
+        }
+      } else {
+        if (arr[i][j] === "x") {
+          // e.target.style.backgroundColor = "red";
+          updateGridHelper([i], [j], "red", user);
+        } else if (arr[i][j] === "o") {
+          updateGridHelper([i], [j], "grey", user);
+        }
       }
     }
   }
