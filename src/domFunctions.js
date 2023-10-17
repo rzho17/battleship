@@ -230,6 +230,22 @@ export const welcomeScreen = (player) => {
   setShipGrid(player);
 };
 
+export const winnerScreen = (winner) => {
+  const loadContainer = document.querySelector(".loadContainer");
+  loadContainer.style.display = "flex";
+  const loadInfo = document.querySelector(".loadInfo");
+  loadInfo.innerHTML = "";
+
+  const winnerTitle = document.createElement("h2");
+  winnerTitle.innerText = winner;
+  winnerTitle.className = "loadTitle";
+  const playAgain = document.createElement("button");
+  playAgain.innerText = "Play Again?";
+  playAgain.className = "playAgainBtn";
+
+  loadInfo.append(winnerTitle, playAgain);
+};
+
 export const getCoord = (str) => {
   const xValue = parseInt(str[0]);
   const yValue = parseInt(str[1]);
@@ -297,10 +313,10 @@ export const updateGrid = (arr, user) => {
         }
       } else {
         //remove this later as i am using it to see the ship placement
-        if (arr[i][j] instanceof Ship) {
-          // console.log(arr[i][j]);
-          updateGridHelper([i], [j], "orange", user);
-        }
+        // if (arr[i][j] instanceof Ship) {
+        //   // console.log(arr[i][j]);
+        //   updateGridHelper([i], [j], "orange", user);
+        // }
         if (arr[i][j] === "x") {
           // e.target.style.backgroundColor = "red";
           updateGridHelper([i], [j], "red", user);

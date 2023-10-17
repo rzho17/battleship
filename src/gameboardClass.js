@@ -122,12 +122,6 @@ class Gameboard {
     const validPositionY = 10 - ship.length >= row;
 
     let result = false;
-    // for (let i = 0; i < this.board.length; i++) {
-    //   for (let j = 0; j < this.board[i].length; j++) {
-    //     if (this.board[i][j] === "o" || this.board[i][j] === "x") {
-    //     }
-    //   }
-    // }
 
     if (
       (position === "x" && !validPositionX) ||

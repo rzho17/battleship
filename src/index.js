@@ -2,6 +2,7 @@ import makeGrid, {
   getGridPosition,
   updateGrid,
   welcomeScreen,
+  winnerScreen,
 } from "./domFunctions";
 
 import player from "./gameControl";
@@ -18,7 +19,8 @@ import gameFlow from "./gameControl";
 
 // const player = new Player();
 
-// welcomeScreen(gameFlow.player);
+welcomeScreen(gameFlow.player);
+// winnerScreen("Player");
 
 // player.placeShip(player.carrier, [0, 0], "x");
 // player.placeShip(player.destroyer, [2, 5], "x");
