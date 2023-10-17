@@ -296,6 +296,11 @@ export const updateGrid = (arr, user) => {
           updateGridHelper([i], [j], "grey", user);
         }
       } else {
+        //remove this later as i am using it to see the ship placement
+        if (arr[i][j] instanceof Ship) {
+          // console.log(arr[i][j]);
+          updateGridHelper([i], [j], "orange", user);
+        }
         if (arr[i][j] === "x") {
           // e.target.style.backgroundColor = "red";
           updateGridHelper([i], [j], "red", user);

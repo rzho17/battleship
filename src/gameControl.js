@@ -129,18 +129,32 @@ const checkCoordArr = (num) => {
   return coord;
 };
 
-const computerAttack = () => {
+const getRandomCoord = () => {
   const randomNum = Math.floor(Math.random() * coordHolder.coordArr.length);
+  const coord = checkCoordArr(randomNum).flat(1);
+  return coord;
+};
+
+const getRandomAxis = () => {
+  const randomNum = Math.floor(Math.random() * 2);
+
+  if (randomNum === 1) {
+    return "x";
+  } else {
+    return "y";
+  }
+};
+
+const computerAttack = () => {
+  //   const randomNum = Math.floor(Math.random() * coordHolder.coordArr.length);
+  //   const coord = checkCoordArr(randomNum).flat(1);
 
   //have an array with all the possible coords
   //get a random number from 0 to current array length
   //use that number for the coord
   //remove that number from the array list
 
-  //   console.log(randomNum);
-  const coord = checkCoordArr(randomNum).flat(1);
-  console.log(coord);
-  gameFlow.player.receiveAttack(coord);
+  gameFlow.player.receiveAttack(getRandomCoord());
 
   updateGrid(gameFlow.player.gameBoard.board, "playerBoard");
 };
@@ -160,14 +174,48 @@ const gameFlow = (() => {
   setBoard();
 
   const player = new Player();
-  player.placeShip(player.shipHolder[0], [1, 2], "x");
+  //   player.placeShip(player.shipHolder[0], [1, 2], "x");
+  //   player.placeShip(player.shipHolder[0], [1, 2], "x");
+  //   player.placeShip(player.shipHolder[1], [2, 2], "x");
+  //   player.placeShip(player.shipHolder[2], [3, 2], "x");
+  //   player.placeShip(player.shipHolder[3], [4, 2], "x");
+  //   player.placeShip(player.shipHolder[4], [5, 2], "x");
 
   const computer = new Player();
-  computer.placeShip(computer.shipHolder[0], [1, 2], "x");
-  computer.placeShip(computer.shipHolder[1], [2, 2], "x");
-  computer.placeShip(computer.shipHolder[2], [3, 2], "x");
-  computer.placeShip(computer.shipHolder[3], [4, 2], "x");
-  computer.placeShip(computer.shipHolder[4], [5, 2], "x");
+
+  const computerPlaceShip = () => {
+    while (computer.shipHolder.length > 0) {
+      const ship = computer.shipHolder[0];
+      const randomCoord = getRandomCoord();
+      const randomAxis = getRandomAxis();
+
+      //   console.log(ship.length);
+      if (
+        computer.gameBoard.checkShip(ship, randomCoord, randomAxis) === false &&
+        computer.gameBoard.findValidPosition(ship, randomCoord, randomAxis) ===
+          false
+      ) {
+        computer.placeShip(ship, randomCoord, randomAxis);
+
+        computer.shipHolder.shift();
+      }
+    }
+
+    // console.log(computer.gameBoard.board);
+
+    //get a coord from the coord holder
+    //check if it is a valid position to place a ship
+    //if not keep grabbing a coord from the coord holder until a valid position is found
+
+    //randomly switch between x and y coord to place ships
+  };
+
+  computerPlaceShip();
+  //   computer.placeShip(computer.shipHolder[0], [1, 2], "x");
+  //   computer.placeShip(computer.shipHolder[1], [2, 2], "x");
+  //   computer.placeShip(computer.shipHolder[2], [3, 2], "x");
+  //   computer.placeShip(computer.shipHolder[3], [4, 2], "x");
+  //   computer.placeShip(computer.shipHolder[4], [5, 2], "x");
 
   const playerAttack = () => {
     const playerBoard = document.querySelectorAll(
@@ -177,13 +225,24 @@ const gameFlow = (() => {
     playerBoard.forEach((grid) => {
       grid.addEventListener("click", (e) => {
         const coord = getCoord(e.target.dataset.gridPosition);
+        const checkGrid = e.target.classList.contains("ship");
+
+        // console.log(e.target.classList.contains("ship"));
+
+        if (!checkGrid) {
+          computer.receiveAttack(coord);
+          console.log(computer.gameBoard.board);
+          // getGridPosition(computer.gameBoard.board, "computerBoard");
+          computerAttack();
+          checkWin();
+        }
         // console.log(computer.gameBoard.board);
         // console.log(computer.gameBoard.allShipsSunk());
         // console.log(coord);
-        computer.receiveAttack(coord);
-        // getGridPosition(computer.gameBoard.board, "computerBoard");
-        computerAttack();
-        checkWin();
+        // computer.receiveAttack(coord);
+        // // getGridPosition(computer.gameBoard.board, "computerBoard");
+        // computerAttack();
+        // checkWin();
       });
     });
   };
@@ -203,6 +262,7 @@ const gameFlow = (() => {
   //   console.log(computer.gameBoard.board);
   return { player, computer };
 })();
+
 // console.log("this is working");
 
 export default gameFlow;

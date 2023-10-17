@@ -26,6 +26,15 @@ class Gameboard {
 
     let result = false;
 
+    // if (
+    //   (position === "x" && !validPositionX) ||
+    //   (position === "y" && !validPositionY)
+    // ) {
+    //   result === true;
+    //   // console.log("redirect");
+    //   // return result;
+    // }
+
     if (position === "x" && validPositionX) {
       for (let i = 0; i < ship.length; i++) {
         if (this.board[row][col + i] instanceof Ship) {
@@ -33,6 +42,7 @@ class Gameboard {
         }
       }
     }
+
     if (position === "y" && validPositionY) {
       for (let i = 0; i < ship.length; i++) {
         if (this.board[row + i][col] instanceof Ship) {
@@ -40,6 +50,10 @@ class Gameboard {
         }
       }
     }
+
+    console.log(
+      `i will place ${ship.length} @ [${coord}] Position ${position}`
+    );
 
     return result;
   }
@@ -101,13 +115,30 @@ class Gameboard {
     }
   }
 
-  findValidPosition() {
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
-        if (this.board[i][j] === "o" || this.board[i][j] === "x") {
-        }
-      }
+  findValidPosition(ship, coord, position) {
+    const row = coord[0];
+    const col = coord[1];
+    const validPositionX = 10 - ship.length >= col;
+    const validPositionY = 10 - ship.length >= row;
+
+    let result = false;
+    // for (let i = 0; i < this.board.length; i++) {
+    //   for (let j = 0; j < this.board[i].length; j++) {
+    //     if (this.board[i][j] === "o" || this.board[i][j] === "x") {
+    //     }
+    //   }
+    // }
+
+    if (
+      (position === "x" && !validPositionX) ||
+      (position === "y" && !validPositionY)
+    ) {
+      // console.log("redirect");
+      // return result;
+      result = true;
     }
+
+    return result;
   }
 
   allShipsSunk() {
