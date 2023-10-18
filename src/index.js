@@ -7,6 +7,7 @@ import makeGrid, {
 
 import player from "./gameControl";
 import gameFlow from "./gameControl";
+import { players } from "./gameControl";
 // import Player from "./playerClass";
 
 // const playerBoard = document.querySelector(".playerBoard");
@@ -19,7 +20,8 @@ import gameFlow from "./gameControl";
 
 // const player = new Player();
 
-welcomeScreen(gameFlow.player);
+welcomeScreen(players.player);
+gameFlow();
 // winnerScreen("Player");
 
 // player.placeShip(player.carrier, [0, 0], "x");

@@ -14,6 +14,9 @@ import Player from "./playerClass";
 const setBoard = () => {
   const playerBoard = document.querySelector(".playerBoard");
   const computerBoard = document.querySelector(".computerBoard");
+
+  playerBoard.innerHTML = "";
+  computerBoard.innerHTML = "";
   makeGrid(playerBoard);
   makeGrid(computerBoard);
 };
@@ -271,19 +274,19 @@ const computerAttack = () => {
   //use that number for the coord
   //remove that number from the array list
 
-  gameFlow.player.receiveAttack(getRandomCoordAtt());
+  players.player.receiveAttack(getRandomCoordAtt());
 
-  updateGrid(gameFlow.player.gameBoard.board, "playerBoard");
+  updateGrid(players.player.gameBoard.board, "playerBoard");
   checkWin();
 };
 
 const checkWin = () => {
-  if (gameFlow.computer.gameBoard.allShipsSunk() === true) {
+  if (players.computer.gameBoard.allShipsSunk() === true) {
     // return console.log("player win");
     winnerScreen("player win");
     playAgain();
   }
-  if (gameFlow.player.gameBoard.allShipsSunk() === true) {
+  if (players.player.gameBoard.allShipsSunk() === true) {
     // return console.log("computer win");
     winnerScreen("computer win");
     playAgain();
@@ -294,30 +297,140 @@ const checkWin = () => {
 
 const playAgain = () => {
   const playAgainBtn = document.querySelector(".playAgainBtn");
-  const playerBoard = document.querySelector(".playerBoard");
-  const computerBoard = document.querySelector(".computerBoard");
+  //   const playerBoard = document.querySelector(".playerBoard");
+  //   const computerBoard = document.querySelector(".computerBoard");
   const loadContainer = document.querySelector(".loadContainer");
   const player = new Player();
   const computer = new Player();
+  const coordArr = [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+    [0, 3],
+    [0, 4],
+    [0, 5],
+    [0, 6],
+    [0, 7],
+    [0, 8],
+    [0, 9],
+    [1, 0],
+    [1, 1],
+    [1, 2],
+    [1, 3],
+    [1, 4],
+    [1, 5],
+    [1, 6],
+    [1, 7],
+    [1, 8],
+    [1, 9],
+    [2, 0],
+    [2, 1],
+    [2, 2],
+    [2, 3],
+    [2, 4],
+    [2, 5],
+    [2, 6],
+    [2, 7],
+    [2, 8],
+    [2, 9],
+    [3, 0],
+    [3, 1],
+    [3, 2],
+    [3, 3],
+    [3, 4],
+    [3, 5],
+    [3, 6],
+    [3, 7],
+    [3, 8],
+    [3, 9],
+    [4, 0],
+    [4, 1],
+    [4, 2],
+    [4, 3],
+    [4, 4],
+    [4, 5],
+    [4, 6],
+    [4, 7],
+    [4, 8],
+    [4, 9],
+    [5, 0],
+    [5, 1],
+    [5, 2],
+    [5, 3],
+    [5, 4],
+    [5, 5],
+    [5, 6],
+    [5, 7],
+    [5, 8],
+    [5, 9],
+    [6, 0],
+    [6, 1],
+    [6, 2],
+    [6, 3],
+    [6, 4],
+    [6, 5],
+    [6, 6],
+    [6, 7],
+    [6, 8],
+    [6, 9],
+    [7, 0],
+    [7, 1],
+    [7, 2],
+    [7, 3],
+    [7, 4],
+    [7, 5],
+    [7, 6],
+    [7, 7],
+    [7, 8],
+    [7, 9],
+    [8, 0],
+    [8, 1],
+    [8, 2],
+    [8, 3],
+    [8, 4],
+    [8, 5],
+    [8, 6],
+    [8, 7],
+    [8, 8],
+    [8, 9],
+    [9, 0],
+    [9, 1],
+    [9, 2],
+    [9, 3],
+    [9, 4],
+    [9, 5],
+    [9, 6],
+    [9, 7],
+    [9, 8],
+    [9, 9],
+  ];
 
   playAgainBtn.addEventListener("click", () => {
     loadContainer.remove();
-    playerBoard.innerHTML = "";
-    computerBoard.innerHTML = "";
-    gameFlow.player = player;
-    gameFlow.player = computer;
+    // playerBoard.innerHTML = "";
+    // computerBoard.innerHTML = "";
+    players.player = player;
+    players.computer = computer;
+    coordHolder.coordArr = [...coordArr];
+    coordHolder.coordArrAtt = [...coordArr];
 
-    console.log(gameFlow.player.gameBoard.board);
-    welcomeScreen(gameFlow.player);
-    setBoard();
-    // gameFlow();
+    console.log(players.player.gameBoard.board);
+    welcomeScreen(players.player);
+    gameFlow();
   });
 };
 
-const gameFlow = (() => {
+export const players = (() => {
+  const player = new Player();
+  const computer = new Player();
+
+  return { player, computer };
+})();
+
+const gameFlow = () => {
   setBoard();
 
-  const player = new Player();
+  //   const player = new Player();
   //   player.placeShip(player.shipHolder[0], [1, 2], "x");
   //   player.placeShip(player.shipHolder[0], [1, 2], "x");
   //   player.placeShip(player.shipHolder[1], [2, 2], "x");
@@ -325,23 +438,27 @@ const gameFlow = (() => {
   //   player.placeShip(player.shipHolder[3], [4, 2], "x");
   //   player.placeShip(player.shipHolder[4], [5, 2], "x");
 
-  const computer = new Player();
+  //   const computer = new Player();
 
   const computerPlaceShip = () => {
-    while (computer.shipHolder.length > 0) {
-      const ship = computer.shipHolder[0];
+    while (players.computer.shipHolder.length > 0) {
+      const ship = players.computer.shipHolder[0];
       const randomCoord = getRandomCoord();
       const randomAxis = getRandomAxis();
 
       //   console.log(ship.length);
       if (
-        computer.gameBoard.checkShip(ship, randomCoord, randomAxis) === false &&
-        computer.gameBoard.findValidPosition(ship, randomCoord, randomAxis) ===
-          false
+        players.computer.gameBoard.checkShip(ship, randomCoord, randomAxis) ===
+          false &&
+        players.computer.gameBoard.findValidPosition(
+          ship,
+          randomCoord,
+          randomAxis
+        ) === false
       ) {
-        computer.placeShip(ship, randomCoord, randomAxis);
+        players.computer.placeShip(ship, randomCoord, randomAxis);
 
-        computer.shipHolder.shift();
+        players.computer.shipHolder.shift();
       }
     }
 
@@ -355,6 +472,7 @@ const gameFlow = (() => {
   };
 
   computerPlaceShip();
+  //   updateGrid(players.player, "playerBoard");
   //   computer.placeShip(computer.shipHolder[0], [1, 2], "x");
   //   computer.placeShip(computer.shipHolder[1], [2, 2], "x");
   //   computer.placeShip(computer.shipHolder[2], [3, 2], "x");
@@ -373,17 +491,17 @@ const gameFlow = (() => {
 
         // console.log(e.target.classList.contains("ship"));
 
-        // if (!checkGrid) {
-        computer.receiveAttack(coord);
-        // console.log(computer.gameBoard.board);
-        console.log(coordHolder.coordArr);
-        // getGridPosition(computer.gameBoard.board, "computerBoard");
+        if (!checkGrid) {
+          players.computer.receiveAttack(coord);
+          // console.log(computer.gameBoard.board);
+          console.log(coordHolder.coordArr);
+          // getGridPosition(computer.gameBoard.board, "computerBoard");
 
-        setTimeout(() => {
-          computerAttack();
-        }, 150);
-        checkWin();
-        // }
+          setTimeout(() => {
+            computerAttack();
+          }, 150);
+          checkWin();
+        }
         // console.log(computer.gameBoard.board);
         // console.log(computer.gameBoard.allShipsSunk());
         // console.log(coord);
@@ -405,13 +523,13 @@ const gameFlow = (() => {
 
   //   console.log(getGridPosition(computer.gameBoard.board, "computerBoard"));
 
-  getGridPosition(computer.gameBoard.board, "computerBoard");
+  getGridPosition(players.computer.gameBoard.board, "computerBoard");
   //   computer.receiveAttack([1, 2], "x");
   //   console.log(computer.gameBoard.board);
 
   //   playAgain();
-  return { player, computer };
-})();
+  //   return { player, computer };
+};
 
 // console.log("this is working");
 

@@ -7,11 +7,11 @@ class Player {
   constructor(gameBoard, shipHolder) {
     this.gameBoard = new Gameboard();
 
-    this.carrier = new Ship(5, 0, false);
-    this.battleship = new Ship(4, 0, false);
-    this.destroyer = new Ship(3, 0, false);
-    this.submarine = new Ship(3, 0, false);
-    this.patrolBoat = new Ship(2, 0, false);
+    this.carrier = new Ship(5, 0, false, "Carrier");
+    this.battleship = new Ship(4, 0, false, "Battleship");
+    this.destroyer = new Ship(3, 0, false, "Destroyer");
+    this.submarine = new Ship(3, 0, false, "Submarine");
+    this.patrolBoat = new Ship(2, 0, false, "Patrol Boat");
 
     this.shipHolder = [
       this.carrier,

@@ -145,6 +145,13 @@ const closeWelcome = (user) => {
   updateGrid(user.gameBoard.board, "playerBoard");
 };
 
+const updateDisplayShip = (user) => {
+  const displayShip = document.querySelector(".displayShip");
+
+  if (user.shipHolder.length > 0) {
+    displayShip.innerText = `Place your: ${user.shipHolder[0].name}`;
+  }
+};
 const setShipGrid = (user) => {
   const initialGrid = document.querySelectorAll(".initialBoard .gridSquare");
   const rotateBtn = document.querySelector(".rotateBtn");
@@ -174,10 +181,12 @@ const setShipGrid = (user) => {
 
         if (position === "x" && xValid && shipPositionValid) {
           setShipGridHelper(user, coord, position);
+          updateDisplayShip(user);
         }
 
         if (position === "y" && yValid && shipPositionValid) {
           setShipGridHelper(user, coord, position);
+          updateDisplayShip(user);
         }
       }
     });
@@ -211,7 +220,7 @@ export const welcomeScreen = (player) => {
 
   const displayShip = document.createElement("div");
   displayShip.className = "displayShip";
-  displayShip.innerText = "Place your ship(change ship name)";
+  displayShip.innerText = `Place your: ${player.shipHolder[0].name}`;
 
   const rotateBtn = document.createElement("button");
   rotateBtn.className = "rotateBtn";
@@ -300,7 +309,7 @@ export const updateGrid = (arr, user) => {
   // console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
-      if (user === "initialBoard") {
+      if (user === "initialBoard" || user === "playerBoard") {
         if (arr[i][j] instanceof Ship) {
           // console.log(arr[i][j]);
           updateGridHelper([i], [j], "orange", user);
