@@ -61,7 +61,7 @@ const setShipHoverHelperX = (ship, grid, color) => {
     );
 
     if (specificGrid.classList.contains("ship")) {
-      specificGrid.style.backgroundColor = "red";
+      specificGrid.style.backgroundColor = "#d74949";
     } else {
       specificGrid.style.backgroundColor = color;
     }
@@ -72,7 +72,7 @@ const setShipHoverHelperX = (ship, grid, color) => {
     grid.addEventListener("mouseout", () => {
       const allGrids = document.querySelectorAll(" .ship");
       allGrids.forEach((grid) => {
-        grid.style.backgroundColor = "orange";
+        grid.style.backgroundColor = "#ffaf2e";
       });
     });
   }
@@ -92,7 +92,7 @@ const setShipHoverHelperY = (ship, grid, color) => {
     );
 
     if (specificGrid.classList.contains("ship")) {
-      specificGrid.style.backgroundColor = "red";
+      specificGrid.style.backgroundColor = "#d74949";
     } else {
       specificGrid.style.backgroundColor = color;
     }
@@ -104,7 +104,7 @@ const setShipHoverHelperY = (ship, grid, color) => {
     grid.addEventListener("mouseout", () => {
       const allGrids = document.querySelectorAll(" .ship");
       allGrids.forEach((grid) => {
-        grid.style.backgroundColor = "orange";
+        grid.style.backgroundColor = "#ffaf2e";
       });
     });
   }
@@ -114,11 +114,11 @@ const setShipHoverX = (user, position, grid) => {
   //try changing this to be mouse over the initial grid, we might not get the error for things out of bound
 
   const mouseOverX = () => {
-    setShipHoverHelperX(user, grid, "blue");
+    setShipHoverHelperX(user, grid, "#49d76d");
   };
 
   const mouseOverY = () => {
-    setShipHoverHelperY(user, grid, "blue");
+    setShipHoverHelperY(user, grid, "#49d76d");
   };
 
   if (position === "x") mouseOverX();
@@ -128,10 +128,10 @@ const setShipHoverX = (user, position, grid) => {
 
 const setShipHoverY = (user, position, grid) => {
   const mouseOutX = () => {
-    setShipHoverHelperX(user, grid, "white");
+    setShipHoverHelperX(user, grid, "#37323e");
   };
   const mouseOutY = () => {
-    setShipHoverHelperY(user, grid, "white");
+    setShipHoverHelperY(user, grid, "#37323e");
   };
 
   if (position === "x") mouseOutX();
@@ -275,10 +275,10 @@ export const getGridPosition = (arr, user) => {
       const yValue = coord[1];
 
       if (arr[xValue][yValue] instanceof Ship) {
-        e.target.style.backgroundColor = "orange";
+        e.target.style.backgroundColor = "#ffaf2e";
       }
       if (arr[xValue][yValue] === null) {
-        e.target.style.backgroundColor = "grey";
+        e.target.style.backgroundColor = "#858486";
       }
 
       updateGrid(arr, user);
@@ -312,25 +312,26 @@ export const updateGrid = (arr, user) => {
       if (user === "initialBoard" || user === "playerBoard") {
         if (arr[i][j] instanceof Ship) {
           // console.log(arr[i][j]);
-          updateGridHelper([i], [j], "orange", user);
+          //##37323e
+          updateGridHelper([i], [j], "#ffaf2e", user);
         }
         if (arr[i][j] === "x") {
-          // e.target.style.backgroundColor = "red";
-          updateGridHelper([i], [j], "red", user);
+          // e.target.style.backgroundColor = "#d74949";
+          updateGridHelper([i], [j], "#d74949", user);
         } else if (arr[i][j] === "o") {
-          updateGridHelper([i], [j], "grey", user);
+          updateGridHelper([i], [j], "#858486", user);
         }
       } else {
         //remove this later as i am using it to see the ship placement
         // if (arr[i][j] instanceof Ship) {
         //   // console.log(arr[i][j]);
-        //   updateGridHelper([i], [j], "orange", user);
+        //   updateGridHelper([i], [j], "#ffaf2e", user);
         // }
         if (arr[i][j] === "x") {
-          // e.target.style.backgroundColor = "red";
-          updateGridHelper([i], [j], "red", user);
+          // e.target.style.backgroundColor = "#d74949";
+          updateGridHelper([i], [j], "#d74949", user);
         } else if (arr[i][j] === "o") {
-          updateGridHelper([i], [j], "grey", user);
+          updateGridHelper([i], [j], "#858486", user);
         }
       }
     }

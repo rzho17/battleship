@@ -283,12 +283,12 @@ const computerAttack = () => {
 const checkWin = () => {
   if (players.computer.gameBoard.allShipsSunk() === true) {
     // return console.log("player win");
-    winnerScreen("player win");
+    winnerScreen("Player wins!");
     playAgain();
   }
   if (players.player.gameBoard.allShipsSunk() === true) {
     // return console.log("computer win");
-    winnerScreen("computer win");
+    winnerScreen("Computer wins!");
     playAgain();
   }
 
