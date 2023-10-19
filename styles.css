@@ -68,7 +68,11 @@ h2 {
 
   background-color: var(--medGray);
   width: 300px;
-  height: 600px;
+  /* height: 600px; */
+
+  gap: 1rem;
+
+  padding-bottom: 2rem;
 
   /* min-height: max-content; */
 
