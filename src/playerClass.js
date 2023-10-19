@@ -1,5 +1,3 @@
-// const Gameboard = require("./gameboardClass");
-// const Ship = require("./shipClass");
 import Gameboard from "./gameboardClass.js";
 import Ship from "./shipClass.js";
 
@@ -40,33 +38,7 @@ class Player {
     ) {
       this.receiveAttack([xCoord, yCoord]);
     }
-
-    // console.log(xCoord);
-    // console.log(yCoord);
   }
 }
-
-// const player = new Player();
-// const computer = new Player();
-
-// player.placeShip(player.carrier, [0, 0], "y");
-// player.placeShip(player.battleship, [6, 1], "x");
-
-// computer.placeShip(computer.carrier, [0, 0], "x");
-// computer.placeShip(computer.battleship, [1, 0], "x");
-// computer.placeShip(computer.destroyer, [2, 0], "x");
-// computer.placeShip(computer.submarine, [3, 0], "x");
-// computer.placeShip(computer.patrolBoat, [4, 0], "x");
-
-// while (computer.gameBoard.allShipsSunk() === false) {
-//   computer.computerAttack();
-// }
-
-// console.log(player.gameBoard.board);
-// console.log(computer.gameBoard.board);
-
-// computer.gameBoard.createBoard();
-// computer.gameBoard.placeShip(computer.carrier, [0, 0], "x");
-// console.log(computer.gameBoard.board);
 
 export default Player;

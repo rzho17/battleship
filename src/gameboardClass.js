@@ -1,4 +1,3 @@
-// const Ship = require("./shipClass");
 import Ship from "./shipClass.js";
 
 class Gameboard {
@@ -26,15 +25,6 @@ class Gameboard {
 
     let result = false;
 
-    // if (
-    //   (position === "x" && !validPositionX) ||
-    //   (position === "y" && !validPositionY)
-    // ) {
-    //   result === true;
-    //   // console.log("redirect");
-    //   // return result;
-    // }
-
     if (position === "x" && validPositionX) {
       for (let i = 0; i < ship.length; i++) {
         if (this.board[row][col + i] instanceof Ship) {
@@ -51,9 +41,9 @@ class Gameboard {
       }
     }
 
-    console.log(
-      `i will place ${ship.length} @ [${coord}] Position ${position}`
-    );
+    // console.log(
+    //   `i will place ${ship.length} @ [${coord}] Position ${position}`
+    // );
 
     return result;
   }
@@ -63,11 +53,6 @@ class Gameboard {
     const col = coord[1];
     const validPositionX = 10 - ship.length >= col;
     const validPositionY = 10 - ship.length >= row;
-
-    // ship = 4
-    // col = 7
-    // length = 10
-    // if 10 - ship <= col = valid
 
     const isValidPosition = this.checkShip(ship, coord, position);
 
@@ -90,9 +75,6 @@ class Gameboard {
     const row = coord[0];
     const col = coord[1];
     let currentShip = this.board[row][col];
-    // let result = false;
-
-    // console.low(row);
 
     if (currentShip instanceof Ship) {
       currentShip.isHit();
@@ -102,8 +84,6 @@ class Gameboard {
       }
 
       this.board[row][col] = "x";
-
-      // console.log(this.board);
     }
 
     if (currentShip === null) {
@@ -127,8 +107,6 @@ class Gameboard {
       (position === "x" && !validPositionX) ||
       (position === "y" && !validPositionY)
     ) {
-      // console.log("redirect");
-      // return result;
       result = true;
     }
 
@@ -142,7 +120,6 @@ class Gameboard {
       for (let j = 0; j < this.board[i].length; j++) {
         if (this.board[i][j] instanceof Ship) {
           winCondition = false;
-          // return winCondition;
         }
       }
     }
@@ -151,4 +128,3 @@ class Gameboard {
 }
 
 export default Gameboard;
-// module.exports = Gameboard;

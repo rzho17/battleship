@@ -6,10 +6,7 @@ import makeGrid, {
   winnerScreen,
 } from "./domFunctions";
 
-// import { getGridPosition } from "./domFunctions";
 import Player from "./playerClass";
-
-// console.log(player);
 
 const setBoard = () => {
   const playerBoard = document.querySelector(".playerBoard");
@@ -266,9 +263,6 @@ const getRandomAxis = () => {
 };
 
 const computerAttack = () => {
-  //   const randomNum = Math.floor(Math.random() * coordHolder.coordArr.length);
-  //   const coord = checkCoordArr(randomNum).flat(1);
-
   //have an array with all the possible coords
   //get a random number from 0 to current array length
   //use that number for the coord
@@ -282,12 +276,10 @@ const computerAttack = () => {
 
 const checkWin = () => {
   if (players.computer.gameBoard.allShipsSunk() === true) {
-    // return console.log("player win");
     winnerScreen("Player wins!");
     playAgain();
   }
   if (players.player.gameBoard.allShipsSunk() === true) {
-    // return console.log("computer win");
     winnerScreen("Computer wins!");
     playAgain();
   }
@@ -297,8 +289,6 @@ const checkWin = () => {
 
 const playAgain = () => {
   const playAgainBtn = document.querySelector(".playAgainBtn");
-  //   const playerBoard = document.querySelector(".playerBoard");
-  //   const computerBoard = document.querySelector(".computerBoard");
   const loadContainer = document.querySelector(".loadContainer");
   const player = new Player();
   const computer = new Player();
@@ -407,8 +397,7 @@ const playAgain = () => {
 
   playAgainBtn.addEventListener("click", () => {
     loadContainer.remove();
-    // playerBoard.innerHTML = "";
-    // computerBoard.innerHTML = "";
+
     players.player = player;
     players.computer = computer;
     coordHolder.coordArr = [...coordArr];
@@ -430,23 +419,12 @@ export const players = (() => {
 const gameFlow = () => {
   setBoard();
 
-  //   const player = new Player();
-  //   player.placeShip(player.shipHolder[0], [1, 2], "x");
-  //   player.placeShip(player.shipHolder[0], [1, 2], "x");
-  //   player.placeShip(player.shipHolder[1], [2, 2], "x");
-  //   player.placeShip(player.shipHolder[2], [3, 2], "x");
-  //   player.placeShip(player.shipHolder[3], [4, 2], "x");
-  //   player.placeShip(player.shipHolder[4], [5, 2], "x");
-
-  //   const computer = new Player();
-
   const computerPlaceShip = () => {
     while (players.computer.shipHolder.length > 0) {
       const ship = players.computer.shipHolder[0];
       const randomCoord = getRandomCoord();
       const randomAxis = getRandomAxis();
 
-      //   console.log(ship.length);
       if (
         players.computer.gameBoard.checkShip(ship, randomCoord, randomAxis) ===
           false &&
@@ -462,8 +440,6 @@ const gameFlow = () => {
       }
     }
 
-    // console.log(computer.gameBoard.board);
-
     //get a coord from the coord holder
     //check if it is a valid position to place a ship
     //if not keep grabbing a coord from the coord holder until a valid position is found
@@ -472,12 +448,6 @@ const gameFlow = () => {
   };
 
   computerPlaceShip();
-  //   updateGrid(players.player, "playerBoard");
-  //   computer.placeShip(computer.shipHolder[0], [1, 2], "x");
-  //   computer.placeShip(computer.shipHolder[1], [2, 2], "x");
-  //   computer.placeShip(computer.shipHolder[2], [3, 2], "x");
-  //   computer.placeShip(computer.shipHolder[3], [4, 2], "x");
-  //   computer.placeShip(computer.shipHolder[4], [5, 2], "x");
 
   const playerAttack = () => {
     const playerBoard = document.querySelectorAll(
@@ -489,48 +459,23 @@ const gameFlow = () => {
         const coord = getCoord(e.target.dataset.gridPosition);
         const checkGrid = e.target.classList.contains("ship");
 
-        // console.log(e.target.classList.contains("ship"));
-
         if (!checkGrid) {
           players.computer.receiveAttack(coord);
-          // console.log(computer.gameBoard.board);
+
           console.log(coordHolder.coordArr);
-          // getGridPosition(computer.gameBoard.board, "computerBoard");
 
           setTimeout(() => {
             computerAttack();
           }, 150);
           checkWin();
         }
-        // console.log(computer.gameBoard.board);
-        // console.log(computer.gameBoard.allShipsSunk());
-        // console.log(coord);
-        // computer.receiveAttack(coord);
-        // // getGridPosition(computer.gameBoard.board, "computerBoard");
-        // computerAttack();
-        // checkWin();
       });
     });
   };
 
-  //   getGridPosition(computer.gameBoard.board, "computerBoard");
-
-  //   console.log(computer.gameBoard.board);
-
   playerAttack();
 
-  //   console.log(getGridPosition(computer.gameBoard.board, "computerBoard"));
-
-  //   console.log(getGridPosition(computer.gameBoard.board, "computerBoard"));
-
   getGridPosition(players.computer.gameBoard.board, "computerBoard");
-  //   computer.receiveAttack([1, 2], "x");
-  //   console.log(computer.gameBoard.board);
-
-  //   playAgain();
-  //   return { player, computer };
 };
-
-// console.log("this is working");
 
 export default gameFlow;

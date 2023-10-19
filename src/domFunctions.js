@@ -15,8 +15,6 @@ const makeGrid = (board) => {
 
 const setAxis = (position) => {
   position = position === "x" ? "y" : "x";
-  //   console.log(position);
-  // setShipHover(user, position);
 
   return position;
 };
@@ -30,22 +28,6 @@ const setShipGridHelper = (user, coord, position) => {
     closeWelcome(user);
   }
 };
-
-// const checkShipGrid = (x, y) => {
-//   let xPosition = x;
-//   let yPosition = y;
-
-//   for (let i = 0; i < currentShip.length; i++) {
-//     yPosition = parseInt(yPosition);
-
-//     let specificGrid = document.querySelector(
-//       `.initialBoard [data-grid-position="${xPosition}${yPosition}"]`
-//     );
-//     yPosition += 1;
-
-//     specificGrid.style.backgroundColor = color;
-//   }
-// };
 
 const setShipHoverHelperX = (ship, grid, color) => {
   const currentShip = ship.shipHolder[0];
@@ -174,8 +156,6 @@ const setShipGrid = (user) => {
         const shipPositionValid =
           user.gameBoard.checkShip(currentShip, coord, position) === false;
 
-        // console.log(user.shipHolder.length);
-
         //need to set a tracker for when currentShip length = 0
         //once that condition is met, the welcome screen will close and the game will begin
 
@@ -202,8 +182,6 @@ const setShipGrid = (user) => {
       }
     });
   });
-
-  //   console.log(initialGrid);
 };
 
 export const welcomeScreen = (player) => {
@@ -258,15 +236,12 @@ export const winnerScreen = (winner) => {
 export const getCoord = (str) => {
   const xValue = parseInt(str[0]);
   const yValue = parseInt(str[1]);
-  //   console.log(str[0], str[1]);
 
   return [xValue, yValue];
 };
 
 export const getGridPosition = (arr, user) => {
   const gridSquare = document.querySelectorAll(`.${user} .gridSquare`);
-  // console.log(user);
-  // console.log("ia am working!");
 
   gridSquare.forEach((item) => {
     item.addEventListener("click", (e) => {
@@ -282,8 +257,6 @@ export const getGridPosition = (arr, user) => {
       }
 
       updateGrid(arr, user);
-      //maybe will use this to return coord so player can attack
-      // return console.log(coord);
     });
   });
 };
@@ -294,7 +267,6 @@ const updateGridHelper = (x, y, colour, user) => {
   );
 
   specificGrid.classList.add("ship");
-  //   console.log(specificGrid);
 
   specificGrid.style.backgroundColor = colour;
 };
@@ -306,29 +278,19 @@ export const updateGrid = (arr, user) => {
   //make the item in the array match with each digit in the board
   //step 2: update the board
 
-  // console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (user === "initialBoard" || user === "playerBoard") {
         if (arr[i][j] instanceof Ship) {
-          // console.log(arr[i][j]);
-          //##37323e
           updateGridHelper([i], [j], "#ffaf2e", user);
         }
         if (arr[i][j] === "x") {
-          // e.target.style.backgroundColor = "#d74949";
           updateGridHelper([i], [j], "#d74949", user);
         } else if (arr[i][j] === "o") {
           updateGridHelper([i], [j], "#858486", user);
         }
       } else {
-        //remove this later as i am using it to see the ship placement
-        // if (arr[i][j] instanceof Ship) {
-        //   // console.log(arr[i][j]);
-        //   updateGridHelper([i], [j], "#ffaf2e", user);
-        // }
         if (arr[i][j] === "x") {
-          // e.target.style.backgroundColor = "#d74949";
           updateGridHelper([i], [j], "#d74949", user);
         } else if (arr[i][j] === "o") {
           updateGridHelper([i], [j], "#858486", user);
@@ -337,7 +299,5 @@ export const updateGrid = (arr, user) => {
     }
   }
 };
-
-// welcomeScreen();
 
 export default makeGrid;
