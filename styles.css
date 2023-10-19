@@ -162,6 +162,27 @@ h2 {
   border-radius: 3px;
 }
 
+footer {
+  font-size: 1.5rem;
+  text-align: center;
+
+  margin: 1em;
+}
+
+.footerContent * {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  height: 0.8em;
+}
+
+img:hover {
+  height: 1em;
+  transition: 100ms ease-in-out;
+}
+
 .rotateBtn:hover,
 .playAgainBtn:hover {
   cursor: pointer;
@@ -178,7 +199,7 @@ h2 {
 
 @media only screen and (min-width: 768px) {
   .loadContainer {
-    /* display: none; */
+    display: none;
   }
 
   h1 {
